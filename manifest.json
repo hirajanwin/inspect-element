@@ -1,0 +1,15 @@
+{
+  "manifest_version": 2,
+  "version": "0.0.1",
+  "name": "Inspect Element",
+
+  "description": "Inspect element.",
+
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["dist/contentScript.js"],
+      "css": ["dist/contentScript.css"]
+    }
+  ]
+}
