@@ -9,33 +9,35 @@ chrome.storage.sync.onChanged.addListener(changes => {
 // Find and return the hovered element based on the inspect mode.
 export function findHoveredElement(event) {
   if (mode === 'content') return event.target
-  for (const child of Array.from(event.target.children)) {
-    const [found, element] = isInElement(event, child)
-    if (found) {
-      return element
-    }
-  }
+
+  const element = isInElement(event, event.target)
+  if (element) return element
+
   return event.target
 }
 
 const isInElement = (event, element) => {
-  const boundingClientRect = element.getBoundingClientRect()
-  const computedStyle = getComputedStyle(element)
-  const boundingBorderRect = getBoundingBorderRect(computedStyle, boundingClientRect)
-  const boundingMarginRect = getBoundingMarginRect(computedStyle, boundingClientRect)
-  const inBorderRect = isInRect(event, boundingBorderRect)
-  const inMarginRect = isInRect(event, boundingMarginRect)
-  if (inBorderRect && element.children) {
-    for (const child of Array.from(element.children)) {
-      const [found, element] = isInElement(event, child)
-      if (found) {
-        return [found, element]
-      }
+  const children = element.children
+  if (children.length) {
+    for (const child of Array.from(children)) {
+      const element = isInElement(event, child)
+      if (element) return element
     }
-  } else if (inMarginRect) {
-    return [true, element]
   }
-  return [false, undefined]
+
+  const computedStyle = getComputedStyle(element)
+  const boundingClientRect = element.getBoundingClientRect()
+
+  const boundingMarginRect = getBoundingMarginRect(computedStyle, boundingClientRect)
+  const inMarginRect = isInRect(event, boundingMarginRect)
+  if (inMarginRect === false) return null
+
+  const boundingBorderRect = getBoundingBorderRect(computedStyle, boundingClientRect)
+  const inBorderRect = isInRect(event, boundingBorderRect)
+  if (inBorderRect === false) return element
+
+  // not found
+  return null
 }
 
 const isInRect = (event, rect) => {
