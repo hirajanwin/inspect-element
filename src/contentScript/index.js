@@ -1,7 +1,7 @@
 import { findHoveredElement } from './find-element'
 import { appendCoverElement, removeCoverElement } from './cover-element'
 
-const isKeyCombinationActive = () => {
+const isKeyCombinationActive = event => {
   return event.metaKey
 }
 const onMousemove = event => {
