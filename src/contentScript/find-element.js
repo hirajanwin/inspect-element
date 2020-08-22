@@ -23,15 +23,17 @@ const isInElement = (event, element) => {
   const computedStyle = getComputedStyle(element)
   const boundingBorderRect = getBoundingBorderRect(computedStyle, boundingClientRect)
   const boundingMarginRect = getBoundingMarginRect(computedStyle, boundingClientRect)
-  if (isInRect(event, boundingBorderRect) === false && isInRect(event, boundingMarginRect)) {
-    return [true, element]
-  } else if (element.children) {
+  const inBorderRect = isInRect(event, boundingBorderRect)
+  const inMarginRect = isInRect(event, boundingMarginRect)
+  if (inBorderRect && element.children) {
     for (const child of Array.from(element.children)) {
       const [found, element] = isInElement(event, child)
       if (found) {
         return [found, element]
       }
     }
+  } else if (inMarginRect) {
+    return [true, element]
   }
   return [false, undefined]
 }
