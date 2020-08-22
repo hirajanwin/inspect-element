@@ -6,6 +6,7 @@
   "author": "Ernest Chang <iattempt.net@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "build-all": "node scripts/build.js",
     "build": "rollup -c",
     "serve": "yarn build --watch",
     "lint": "prettier . --check"
