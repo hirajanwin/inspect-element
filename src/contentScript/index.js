@@ -1,3 +1,4 @@
+import { findHoveredElement } from './find-element'
 import { appendCoverElement, removeCoverElement } from './cover-element'
 
 const isKeyCombinationActive = () => {
@@ -9,18 +10,20 @@ const onMousemove = event => {
     return
   }
 
+  const target = findHoveredElement(event)
+
   if (event && event.target && event.target.dataset && event.target.dataset.inspectElement) {
     // remove covered element first if move mouse over it
     removeCoverElement()
 
     requestAnimationFrame(() => {
-      appendCoverElement(event.target)
+      appendCoverElement(target)
     })
   } else {
-    appendCoverElement(event.target)
+    appendCoverElement(target)
   }
 }
 
 // appendStyleNode()
-window.removeEventListener('mouseover', onMousemove)
-window.addEventListener('mouseover', onMousemove)
+window.removeEventListener('mousemove', onMousemove)
+window.addEventListener('mousemove', onMousemove)
