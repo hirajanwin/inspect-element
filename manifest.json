@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "name": "Inspect Element",
 
-  "description": "Inspect element.",
+  "description": "Inspect element for content, and margin.",
 
   "permissions": ["storage"],
 
