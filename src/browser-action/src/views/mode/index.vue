@@ -3,8 +3,8 @@
     v-subheader Mode
     v-list-item
       v-radio-group.pl-3.mt-1( v-model="mode" hide-details="auto" )
-        v-radio( label="Inspect by content" value="content" )
-        v-radio( label="Inspect by margin" value="margin" )
+        v-radio( label="Content" value="content" )
+        v-radio( label="Margin" value="margin" )
 </template>
 
 <script>
@@ -12,7 +12,7 @@ export default {
   name: 'mode',
 
   data: () => ({
-    mode: 'content',
+    mode: 'margin',
   }),
 
   watch: {
