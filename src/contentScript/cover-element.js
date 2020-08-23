@@ -82,14 +82,15 @@ const setMarginStyle = (element, computedStyle, boundingClicentRect) => {
   element.style.borderLeftWidth = getMarginLeft(computedStyle) + 'px'
 }
 
-const createElement = () => {
+const createElement = id => {
   const element = document.createElement('DIV')
-  setCommonStyle(element)
+  setCommonStyle(element, id)
   return element
 }
 
-const setCommonStyle = element => {
+const setCommonStyle = (element, id) => {
   element.dataset['inspectElement'] = 'inspectElement'
+  element.id = `inspect-element-${id}`
   element.style.position = 'fixed'
   element.style.zIndex = 9999
   element.style.pointerEvents = 'none'
@@ -164,10 +165,10 @@ const getMarginLeft = computedStyle => {
 }
 
 const coverElements = {
-  cover: createElement(),
-  padding: createElement(),
-  border: createElement(),
-  margin: createElement(),
+  cover: createElement('cover'),
+  padding: createElement('padding'),
+  border: createElement('border'),
+  margin: createElement('margin'),
 }
 
 let coverColor = 'blue'
