@@ -22,8 +22,8 @@ function debounceBuild() {
 function build() {
   console.clear()
 
-  process.chdir(cwd)
   childProcess.execSync('rm -rf dist')
+  childProcess.execSync('rm -f dist.zip')
 
   // static files, contentScript
   childProcess.execSync('yarn build', handleChildProcess)
@@ -34,6 +34,9 @@ function build() {
     process.argv.includes('--watch') ? 'yarn build --mode development' : 'yarn build',
     handleChildProcess,
   )
+
+  process.chdir(cwd)
+  childProcess.execSync('zip -r dist dist/*')
 
   console.log('')
   console.log('Waiting for changes...')
