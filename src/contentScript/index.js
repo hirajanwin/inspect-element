@@ -27,3 +27,6 @@ const onMousemove = event => {
 // appendStyleNode()
 window.removeEventListener('mousemove', onMousemove)
 window.addEventListener('mousemove', onMousemove)
+
+window.removeEventListener('keyup', removeCoverElement)
+window.addEventListener('keyup', removeCoverElement)
