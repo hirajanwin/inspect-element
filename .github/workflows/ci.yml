@@ -10,7 +10,7 @@ jobs:
       - run: yarn install
       - run: cd src/browser-action
       - run: yarn install
-      - run: cd -
+      - run: cd ../../
       - run: yarn build-all
 
       - run: ls -l
