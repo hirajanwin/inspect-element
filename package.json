@@ -6,6 +6,7 @@
   "author": "Ernest Chang <iattempt.net@gmail.com>",
   "license": "MIT",
   "scripts": {
+    "install-all": "yarn install && cd src/browser-action && yarn install",
     "build-all": "node scripts/build.js",
     "build": "rollup -c",
     "cypress:open": "cypress open",
