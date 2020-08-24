@@ -27,7 +27,7 @@ module.exports = (on, config) => {
     return launchOptions
   })
 
-  config.ignoreTestFiles = ['**/*.html']
+  config.testFiles = '**/*.spec.js'
 
   return config
 }
