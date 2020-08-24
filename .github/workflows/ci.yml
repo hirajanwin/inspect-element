@@ -6,9 +6,14 @@ jobs:
     name: E2E on Chrome
     steps:
       - uses: actions/checkout@v1
-      - run: ls -l
+
       - run: yarn install
+      - run: cd src/browser-action
+      - run: yarn install
+      - run: cd -
       - run: yarn build-all
+
+      - run: ls -l
 
       - uses: cypress-io/github-action@v2
         with:
