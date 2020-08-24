@@ -7,10 +7,15 @@ jobs:
     steps:
       - uses: actions/checkout@v1
 
+      - run: ls -l
       - run: yarn install
+
       - run: cd src/browser-action
+      - run: ls -l
       - run: yarn install
+
       - run: cd ../../
+      - run: ls -l
       - run: yarn build-all
 
       - run: ls -l
