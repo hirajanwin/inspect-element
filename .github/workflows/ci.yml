@@ -5,11 +5,11 @@ jobs:
     runs-on: ubuntu-16.04
     name: E2E on Chrome
     steps:
-      - run: cd inspect-element
+      - uses: actions/checkout@v1
       - run: ls -l
       - run: yarn install
       - run: yarn build-all
-      - uses: actions/checkout@v1
+
       - uses: cypress-io/github-action@v2
         with:
           browser: chrome
