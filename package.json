@@ -4,6 +4,13 @@
   "main": "index.js",
   "repository": "git@github.com:iendeavor/inspect-element.git",
   "author": "Ernest Chang <iattempt.net@gmail.com>",
+  "contributors": [
+    {
+      "name": "ChrisLin",
+      "email": "i100308326@gmail.com",
+      "url": "https://github.com/ChrisLin1997"
+    }
+  ],
   "license": "MIT",
   "scripts": {
     "install-all": "yarn install && cd src/browser-action && yarn install",
