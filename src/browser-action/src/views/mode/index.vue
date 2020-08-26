@@ -8,38 +8,19 @@
 </template>
 
 <script>
+import configs from '../../../../configs'
+
 export default {
   name: 'mode',
 
-  data: () => ({
-    mode: 'margin',
-  }),
-
-  watch: {
-    mode() {
-      console.log(this.mode)
-      chrome.storage.sync.set({ mode: this.mode })
-    },
-  },
-
-  created() {
-    chrome.storage.sync.onChanged.addListener(this.handleStorageChange)
-
-    chrome.storage.sync.get(['mode'], ({ mode }) => {
-      if (mode) this.mode = mode
-
-      // store default mode
-      chrome.storage.sync.set({ mode: this.mode })
-    })
-  },
-
-  beforeDestroy() {
-    chrome.storage.sync.onChanged.removeListener(this.handleStorageChange)
-  },
-
-  methods: {
-    handleStorageChange(changes) {
-      if (changes.mode && changes.mode.newValue) this.mode = changes.mode.newValue
+  computed: {
+    mode: {
+      set(mode) {
+        chrome.storage.sync.set({ mode })
+      },
+      get() {
+        return configs.mode
+      },
     },
   },
 }

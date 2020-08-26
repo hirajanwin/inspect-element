@@ -17,6 +17,7 @@
 
 <script>
 import ColorPicker from './color-picker'
+import configs from '../../../../configs'
 
 export default {
   name: 'color',
@@ -25,58 +26,39 @@ export default {
     ColorPicker,
   },
 
-  data: () => ({
-    coverColor: '#62C0CC80',
-    paddingColor: '#62D56E80',
-    borderColor: '#DDE64880',
-    marginColor: '#FC923580',
-  }),
-
-  watch: {
-    coverColor() {
-      chrome.storage.sync.set({ coverColor: this.coverColor })
-    },
-    paddingColor() {
-      chrome.storage.sync.set({ paddingColor: this.paddingColor })
-    },
-    borderColor() {
-      chrome.storage.sync.set({ borderColor: this.borderColor })
-    },
-    marginColor() {
-      chrome.storage.sync.set({ marginColor: this.marginColor })
-    },
-  },
-
-  created() {
-    chrome.storage.sync.onChanged.addListener(this.handleStorageChange)
-
-    chrome.storage.sync.get(
-      ['coverColor', 'paddingColor', 'borderColor', 'marginColor'],
-      ({ coverColor, paddingColor, borderColor, marginColor }) => {
-        if (coverColor) this.coverColor = coverColor
-        if (paddingColor) this.paddingColor = paddingColor
-        if (borderColor) this.borderColor = borderColor
-        if (marginColor) this.marginColor = marginColor
-
-        // store default colors
-        chrome.storage.sync.set({ coverColor: this.coverColor })
-        chrome.storage.sync.set({ paddingColor: this.paddingColor })
-        chrome.storage.sync.set({ borderColor: this.borderColor })
-        chrome.storage.sync.set({ marginColor: this.marginColor })
+  computed: {
+    coverColor: {
+      set(coverColor) {
+        chrome.storage.sync.set({ coverColor })
       },
-    )
-  },
+      get() {
+        return configs.coverColor
+      },
+    },
 
-  beforeDestroy() {
-    chrome.storage.sync.onChanged.removeListener(this.handleStorageChange)
-  },
-
-  methods: {
-    handleStorageChange(changes) {
-      if (changes.coverColor && changes.coverColor.newValue) this.coverColor = changes.coverColor.newValue
-      if (changes.paddingColor && changes.paddingColor.newValue) this.paddingColor = changes.paddingColor.newValue
-      if (changes.borderColor && changes.borderColor.newValue) this.borderColor = changes.borderColor.newValue
-      if (changes.marginColor && changes.marginColor.newValue) this.marginColor = changes.marginColor.newValue
+    paddingColor: {
+      set(paddingColor) {
+        chrome.storage.sync.set({ paddingColor })
+      },
+      get() {
+        return configs.paddingColor
+      },
+    },
+    borderColor: {
+      set(borderColor) {
+        chrome.storage.sync.set({ borderColor })
+      },
+      get() {
+        return configs.borderColor
+      },
+    },
+    marginColor: {
+      set(marginColor) {
+        chrome.storage.sync.set({ marginColor })
+      },
+      get() {
+        return configs.marginColor
+      },
     },
   },
 }

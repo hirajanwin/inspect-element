@@ -1,7 +1,9 @@
+import configs from '../configs'
+
 // all use the content box to compute top, width, etc.
 
 const setCoverStyle = (element, computedStyle, boundingClicentRect) => {
-  element.style.backgroundColor = coverColor
+  element.style.backgroundColor = configs.coverColor
   element.style.top = getContentTop(computedStyle, boundingClicentRect) + 'px'
   element.style.left = getContentLeft(computedStyle, boundingClicentRect) + 'px'
   element.style.height = getContentHeight(computedStyle, boundingClicentRect) + 'px'
@@ -13,7 +15,7 @@ const setPaddingStyle = (element, computedStyle, boundingClicentRect) => {
   element.style.left = getContentLeft(computedStyle, boundingClicentRect) - getPaddingLeft(computedStyle) + 'px'
   element.style.height = getContentHeight(computedStyle, boundingClicentRect) + 'px'
   element.style.width = getContentWidth(computedStyle, boundingClicentRect) + 'px'
-  element.style.borderColor = paddingColor
+  element.style.borderColor = configs.paddingColor
   element.style.borderTopWidth = getPaddingTop(computedStyle) + 'px'
   element.style.borderRightWidth = getPaddingRight(computedStyle) + 'px'
   element.style.borderBottomWidth = getPaddingBottom(computedStyle) + 'px'
@@ -41,7 +43,7 @@ const setBorderStyle = (element, computedStyle, boundingClicentRect) => {
     getPaddingRight(computedStyle) +
     getPaddingLeft(computedStyle) +
     'px'
-  element.style.borderColor = borderColor
+  element.style.borderColor = configs.borderColor
   element.style.borderTopWidth = getBorderTopWidth(computedStyle) + 'px'
   element.style.borderRightWidth = getBorderRightWidth(computedStyle) + 'px'
   element.style.borderBottomWidth = getBorderBottomWidth(computedStyle) + 'px'
@@ -75,7 +77,7 @@ const setMarginStyle = (element, computedStyle, boundingClicentRect) => {
     getBorderRightWidth(computedStyle) +
     getBorderLeftWidth(computedStyle) +
     'px'
-  element.style.borderColor = marginColor
+  element.style.borderColor = configs.marginColor
   element.style.borderTopWidth = getMarginTop(computedStyle) + 'px'
   element.style.borderRightWidth = getMarginRight(computedStyle) + 'px'
   element.style.borderBottomWidth = getMarginBottom(computedStyle) + 'px'
@@ -170,28 +172,6 @@ const coverElements = {
   border: createElement('border'),
   margin: createElement('margin'),
 }
-
-let coverColor = 'blue'
-let paddingColor = 'green'
-let borderColor = 'yellow'
-let marginColor = 'orange'
-
-chrome.storage.sync.get(
-  ['coverColor', 'paddingColor', 'borderColor', 'marginColor'],
-  ({ coverColor: _coverColor, paddingColor: _paddingColor, borderColor: _borderColor, marginColor: _marginColor }) => {
-    coverColor = _coverColor
-    paddingColor = _paddingColor
-    borderColor = _borderColor
-    marginColor = _marginColor
-  },
-)
-
-chrome.storage.sync.onChanged.addListener(changes => {
-  if (changes.coverColor) coverColor = changes.coverColor.newValue
-  if (changes.paddingColor) paddingColor = changes.paddingColor.newValue
-  if (changes.borderColor) borderColor = changes.borderColor.newValue
-  if (changes.marginColor) marginColor = changes.marginColor.newValue
-})
 
 // Append cover element to body
 export const appendCoverElement = target => {
