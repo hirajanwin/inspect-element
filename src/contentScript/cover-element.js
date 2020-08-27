@@ -173,9 +173,22 @@ const coverElements = {
   margin: createElement('margin'),
 }
 
+let currentTarget = null
+window.addEventListener('keydown', (event) => {
+  if (event.key !== 'c') return
+  if (event.shiftKey === false) return
+  if (event.metaKey === false) return
+  if (currentTarget === null) return
+
+  console.log(currentTarget)
+  event.preventDefault()
+})
+
 // Append cover element to body
 export const appendCoverElement = target => {
   // throw Error('Not yet implemented.')
+
+  currentTarget = target
 
   for (const element of Object.values(coverElements))
     if (document.body.contains(element) === false) document.body.appendChild(element)
@@ -191,6 +204,7 @@ export const appendCoverElement = target => {
 
 export const removeCoverElement = () => {
   for (const element of Object.values(coverElements)) {
+    currentTarget = null
     try {
       document.body.removeChild(element)
     } catch (error) {
