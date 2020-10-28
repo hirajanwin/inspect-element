@@ -114,10 +114,41 @@
     }
   };
 
+  const configs = {
+    coverColor: '#62C0CC80',
+    paddingColor: '#62D56E80',
+    borderColor: '#DDE64880',
+    marginColor: '#FC923580',
+    mode: 'margin',
+  };
+
+  chrome.storage.sync.get(['coverColor', 'paddingColor', 'borderColor', 'marginColor', 'mode'], values => {
+    if (values.coverColor) configs.coverColor = values.coverColor;
+    if (values.paddingColor) configs.paddingColor = values.paddingColor;
+    if (values.borderColor) configs.borderColor = values.borderColor;
+    if (values.marginColor) configs.marginColor = values.marginColor;
+    if (values.mode) configs.mode = values.mode;
+
+    // store default colors
+    chrome.storage.sync.set({ coverColor: configs.coverColor });
+    chrome.storage.sync.set({ paddingColor: configs.paddingColor });
+    chrome.storage.sync.set({ borderColor: configs.borderColor });
+    chrome.storage.sync.set({ marginColor: configs.marginColor });
+    chrome.storage.sync.set({ mode: configs.mode });
+  });
+
+  chrome.storage.sync.onChanged.addListener(changes => {
+    if (changes.coverColor) configs.coverColor = changes.coverColor.newValue;
+    if (changes.paddingColor) configs.paddingColor = changes.paddingColor.newValue;
+    if (changes.borderColor) configs.borderColor = changes.borderColor.newValue;
+    if (changes.marginColor) configs.marginColor = changes.marginColor.newValue;
+    if (changes.mode) configs.mode = changes.marginColor.mode;
+  });
+
   // all use the content box to compute top, width, etc.
 
   const setCoverStyle = (element, computedStyle, boundingClicentRect) => {
-    element.style.backgroundColor = coverColor;
+    element.style.backgroundColor = configs.coverColor;
     element.style.top = getContentTop(computedStyle, boundingClicentRect) + 'px';
     element.style.left = getContentLeft(computedStyle, boundingClicentRect) + 'px';
     element.style.height = getContentHeight(computedStyle, boundingClicentRect) + 'px';
@@ -129,7 +160,7 @@
     element.style.left = getContentLeft(computedStyle, boundingClicentRect) - getPaddingLeft(computedStyle) + 'px';
     element.style.height = getContentHeight(computedStyle, boundingClicentRect) + 'px';
     element.style.width = getContentWidth(computedStyle, boundingClicentRect) + 'px';
-    element.style.borderColor = paddingColor;
+    element.style.borderColor = configs.paddingColor;
     element.style.borderTopWidth = getPaddingTop(computedStyle) + 'px';
     element.style.borderRightWidth = getPaddingRight(computedStyle) + 'px';
     element.style.borderBottomWidth = getPaddingBottom(computedStyle) + 'px';
@@ -157,7 +188,7 @@
       getPaddingRight(computedStyle) +
       getPaddingLeft(computedStyle) +
       'px';
-    element.style.borderColor = borderColor;
+    element.style.borderColor = configs.borderColor;
     element.style.borderTopWidth = getBorderTopWidth(computedStyle) + 'px';
     element.style.borderRightWidth = getBorderRightWidth(computedStyle) + 'px';
     element.style.borderBottomWidth = getBorderBottomWidth(computedStyle) + 'px';
@@ -191,7 +222,7 @@
       getBorderRightWidth(computedStyle) +
       getBorderLeftWidth(computedStyle) +
       'px';
-    element.style.borderColor = marginColor;
+    element.style.borderColor = configs.marginColor;
     element.style.borderTopWidth = getMarginTop(computedStyle) + 'px';
     element.style.borderRightWidth = getMarginRight(computedStyle) + 'px';
     element.style.borderBottomWidth = getMarginBottom(computedStyle) + 'px';
@@ -286,28 +317,6 @@
     border: createElement('border'),
     margin: createElement('margin'),
   };
-
-  let coverColor = 'blue';
-  let paddingColor = 'green';
-  let borderColor = 'yellow';
-  let marginColor = 'orange';
-
-  chrome.storage.sync.get(
-    ['coverColor', 'paddingColor', 'borderColor', 'marginColor'],
-    ({ coverColor: _coverColor, paddingColor: _paddingColor, borderColor: _borderColor, marginColor: _marginColor }) => {
-      coverColor = _coverColor;
-      paddingColor = _paddingColor;
-      borderColor = _borderColor;
-      marginColor = _marginColor;
-    },
-  );
-
-  chrome.storage.sync.onChanged.addListener(changes => {
-    if (changes.coverColor) coverColor = changes.coverColor.newValue;
-    if (changes.paddingColor) paddingColor = changes.paddingColor.newValue;
-    if (changes.borderColor) borderColor = changes.borderColor.newValue;
-    if (changes.marginColor) marginColor = changes.marginColor.newValue;
-  });
 
   // Append cover element to body
   const appendCoverElement = target => {
