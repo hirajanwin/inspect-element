@@ -1,6 +1,6 @@
 {
   "name": "inspect-element",
-  "version": "1.0.0",
+  "version": "0.0.4",
   "main": "index.js",
   "repository": "git@github.com:iendeavor/inspect-element.git",
   "author": "Ernest Chang <iattempt.net@gmail.com>",
